@@ -1,0 +1,72 @@
+@model ${SOLUTION_NAMESPACE}.ViewModels.Create${entity.name}ViewModel
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";	
+}
+
+$env.setLanguage('C#')
+#set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
+
+
+<div class="row">
+	<div class="col-md-12">
+		<h2>Create : ${entity.name}</h2>
+	</div>
+
+	<div class="col-md-12">
+		@using (Html.BeginForm(actionName: "Create", controllerName: "${entity.name}s", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" })) 
+		{
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+#foreach( $attribute in $dataFields )
+			<div class="form-group">
+				@Html.LabelFor(model => model.${attribute.formattedName(0)}, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+                	@Html.EditorFor(model => model.${attribute.formattedName(0)}, new { htmlAttributes = new { @class = "form-control" } })
+                	@Html.ValidationMessageFor(model => model.${attribute.formattedName(0)}, "", new { @class = "text-danger" })
+            	</div>
+			</div>
+#end
+
+#foreach( $link in $entity.selectedLinks )
+##dans le cas d'une propriété Driver de type Driver : une car possède un Driver
+#if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
+			<div class="form-group">
+				@Html.LabelFor(model => model.Selected${link.formattedFieldName(0)}Id, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+                	@Html.ListBoxFor(model => model.Selected${link.formattedFieldName(0)}Id, Model.${link.formattedFieldName(0)}s, new { htmlAttributes = new { @class = "form-control" } })
+                	@Html.ValidationMessageFor(model => model.Selected${link.formattedFieldName(0)}Id, "", new { @class = "text-danger" })
+            	</div>
+			</div>
+#else
+#set($test = "${link.formattedFieldType(0)}s")
+#foreach( $attribute in $entity.nonKeyAttributes)
+#if( ${attribute.formattedName(0)} ==  $test)
+			<div class="form-group">
+				@Html.LabelFor(model => model.${attribute.formattedName(0)}, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+                	@Html.ListBoxFor(model => model.Selected${attribute.formattedName(0)}Id, Model.${attribute.formattedName(0)}, new { htmlAttributes = new { @class = "form-control" } })
+                	@Html.ValidationMessageFor(model => model.${attribute.formattedName(0)}, "", new { @class = "text-danger" })
+            	</div>
+			</div>
+#end ##fin du if
+#end ##fin du foreach
+#end ##fin du else
+#end ##fin du foreach
+
+
+			
+			<div class="form-group">
+            	<div class="col-md-offset-2 col-md-10">
+                	<input type="submit" value="Create" class="btn btn-default" />
+            	</div>
+        	</div>
+		}
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+   		@Html.ActionLink("Back to List", "Index")
+	</div>
+</div>

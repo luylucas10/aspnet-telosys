@@ -1,0 +1,18 @@
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";	
+}
+
+$env.setLanguage('C#')
+
+
+<div class="row">
+#foreach( $entity in $selectedEntities )
+	<div class="col-md-4">
+		<h2>${entity.name}</h2>
+		<ul>
+  			<li>@Html.ActionLink("Create a ${fn.uncapitalize($entity.name)}", "Create", "${entity.name}s")</li>
+  			<li>@Html.ActionLink("List all ${fn.uncapitalize($entity.name)}s", "List", "${entity.name}s")</li>
+		</ul>
+	</div>
+#end
+</div>
