@@ -7,7 +7,7 @@ It's purpose is to generate the required C# MVC files after having provided a DS
 
 1. Download the template.  
 2. Provide your DSL model.  
-3. Set the following project variable* in your telosys-tools.cfg file :  
+3. Set the following project variable(1) in your telosys-tools.cfg file :  
 ```
 ProjectVariable.SOLUTION_NAMESPACE=YOUR_PROJECT_NAME
 ```
@@ -16,7 +16,7 @@ ProjectVariable.SOLUTION_NAMESPACE=YOUR_PROJECT_NAME
 6. Copy it's content over your MVC project.  
 7. Run the application.  
 
-* : Replace "YOUR_PROJECT_NAME" with your custom project's name.
+(1) : Replace "YOUR_PROJECT_NAME" with your custom project's name.
 ## Requirements
 
 - A MVC project.
