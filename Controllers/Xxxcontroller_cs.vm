@@ -12,7 +12,6 @@ using System.Web.Mvc;
 using ${SOLUTION_NAMESPACE}.Models;
 using ${SOLUTION_NAMESPACE}.ViewModels;
 
-
 $env.setLanguage('C#')
 ##--------------------------------------------------------------------------------------------------------
 ## Key fields = fields in Primary Key    
@@ -23,7 +22,6 @@ $env.setLanguage('C#')
 #set( $name = $fn.uncapitalize($entity.name) )
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
-
 
 namespace ${SOLUTION_NAMESPACE}.Controllers
 {
@@ -99,10 +97,10 @@ namespace ${SOLUTION_NAMESPACE}.Controllers
 						return View("Create${entity.name}View", model);
 					}
 				}
-#end ##fin du if
-#end ##fin du foreach
-#end ##fin du else
-#end ##fin du foreach
+#end ##end if
+#end ##end foreach
+#end ##end else
+#end ##end foreach
 				
 				_context.${entity.name}s.Add(${name});
 				await _context.SaveChangesAsync();
@@ -179,17 +177,17 @@ namespace ${SOLUTION_NAMESPACE}.Controllers
 				var $name = _context.${entity.name}s.FirstOrDefault(x => x.${keyFields[0].formattedName(0)} == id);
 				if($name != null)
 				{
-##pour faire un clear dans le cas du one to many avant de remove
+##clearing in case of a one to many before removing
 #foreach( $link in $entity.selectedLinks )
 #if( ${link.formattedFieldType(0)} != ${link.formattedFieldName(0)})
 #set($test = "${link.formattedFieldType(0)}s")
 #foreach( $attribute in $entity.nonKeyAttributes)
 #if( ${attribute.formattedName(0)} ==  $test)
 					${name}.${test}.Clear();
-#end ##fin du if
-#end ##fin du foreach
-#end ##fin du if
-#end ##fin du foreach
+#end ##end if
+#end ##end foreach
+#end ##end if
+#end ##end foreach
 					_context.${entity.name}s.Remove($name);
 					await _context.SaveChangesAsync();
 				}
