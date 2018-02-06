@@ -2,10 +2,8 @@
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
-
 $env.setLanguage('C#')
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
-
 <div class="container">
     <div class="container">
         @using (Html.BeginForm(actionName: "Create", controllerName: "${entity.name}s", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
@@ -40,30 +38,20 @@ $env.setLanguage('C#')
                             </div>
                         </div>
 #end
-#foreach( $link in $entity.selectedLinks )
 ##In case of an object type property (eg : a Car has a Driver)
-#if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Selected${link.formattedFieldName(0)}Id, htmlAttributes: new { @class = "control-label col-sm-2" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.Selected${link.formattedFieldName(0)}Id, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Selected${link.formattedFieldName(0)}Id, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+#foreach( $attribute in $entity.nonKeyAttributes )
+#if ( $attribute.name.matches("List.+") )
 #else
-#set($test = "${link.formattedFieldType(0)}s")
-#foreach( $attribute in $entity.nonKeyAttributes)
-#if( ${attribute.formattedName(0)} ==  $test)
-                        <div class="form-group">
-                            @Html.LabelFor(model => mmodel.${attribute.formattedName(0)}, htmlAttributes: new { @class = "control-label col-sm-2" })
+#if ( $attribute.isFK() )
+<div class="form-group">
+                            @Html.LabelFor(model => model.${attribute.formattedName(0)}, htmlAttributes: new { @class = "control-label col-sm-2" })
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Selected${link.formattedFieldName(0)}Id, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.${attribute.formattedName(0)}, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.${attribute.formattedName(0)}, "", new { @class = "text-danger" })
                             </div>
                         </div>
-#end ##end if
-#end ##end foreach
-#end ##end else
+#end
+#end
 #end ##end foreach
                     </div>
                     <div class="panel-footer text-center">

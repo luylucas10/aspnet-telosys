@@ -2,9 +2,7 @@
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
-
 $env.setLanguage('C#')
-
 <div class="container">
     <div class="container">
         @using (Html.BeginForm(actionName: "Update", controllerName: "${entity.name}s", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
@@ -29,6 +27,10 @@ $env.setLanguage('C#')
                     </div>
                     <div class="panel-body">
                         @Html.AntiForgeryToken()
+#foreach( $attribute in $entity.KeyAttributes )
+						<input type="hidden" name="${attribute.formattedName(0)}" value="@Model.${attribute.formattedName(0)}"/>
+#end
+						@Html.ValidationSummary("", new { @class = "text-danger" })
 #foreach( $attribute in $entity.nonKeyAttributes )
                         <div class="form-group">
                             @Html.LabelFor(model => model.${attribute.formattedName(0)}, htmlAttributes: new { @class = "control-label col-sm-2" })
@@ -40,7 +42,7 @@ $env.setLanguage('C#')
 #end
                     </div>
                     <div class="panel-footer text-center">
-                        <a href="../../author/">
+                        <a href="../../${entity.name}/">
                             <button type="submit" value="Create" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Update</button>
                         </a>
 

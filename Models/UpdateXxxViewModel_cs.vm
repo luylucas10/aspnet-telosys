@@ -14,6 +14,7 @@ $env.setLanguage('C#')
 #set( $name = ${fn.uncapitalize($entity.name)})
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
+#set( $linkFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.IN_SELECTED_LINKS ) )
 
 namespace ${SOLUTION_NAMESPACE}.ViewModels
 {
@@ -27,18 +28,21 @@ namespace ${SOLUTION_NAMESPACE}.ViewModels
 		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; } 
 #end
 
+#foreach ( $attribute in $linkFields )
+		public $attribute.type ${attribute.name} { get; set; }
+#end ##end foreach
+
 #foreach( $link in $entity.selectedLinks )
-#if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
+#if ( $link.fieldType.matches("List.+") )
 		public ${link.formattedFieldType(0)} ${link.formattedFieldName(0)} { get; set; }
-#else
+#end
 #set($test = "${link.formattedFieldType(0)}s")
 #foreach( $attribute in $entity.nonKeyAttributes)
 #if( ${attribute.formattedName(0)} ==  $test)
-		public string Selected${link.formattedFieldType(0)}Id { get; set; }	
+		public string Selected${link.formattedFieldType(0)}Id { get; set; }
 		public ICollection<SelectListItem> ${attribute.formattedName(0)} { get; set; }
 #end ##fin du if
 #end ##fin du foreach
-#end ##fin du else
 #end ##fin du foreach
 		
 		public Update${entity.name}ViewModel()
@@ -46,34 +50,19 @@ namespace ${SOLUTION_NAMESPACE}.ViewModels
 
 		}
 		
-		public Update${entity.name}ViewModel(${entity.name} $name)
+		public Update${entity.name}ViewModel(${entity.name} ${entity.name})
 		{
 #foreach( $attribute in $entity.keyAttributes )
-			${attribute.formattedName(0)} =  ${name}.${attribute.formattedName(0)};
+			${attribute.formattedName(0)} =  ${entity.name}.${attribute.formattedName(0)};
 #end
 
 #foreach( $attribute in $dataFields )
-			${attribute.formattedName(0)} = ${name}.${attribute.formattedName(0)};
+			${attribute.formattedName(0)} = ${entity.name}.${attribute.formattedName(0)};
 #end
 
-#foreach( $link in $entity.selectedLinks )
-#if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
-			${link.formattedFieldType(0)} = ${name}.${link.formattedFieldName(0)};
-#else
-#set($test = "${link.formattedFieldType(0)}s")
-#foreach( $attribute in $entity.nonKeyAttributes)
-#if( ${attribute.formattedName(0)} ==  $test)
-			$test = ${name}.${link.formattedFieldName(0)}.Select(x => new SelectListItem()
-			{
-				Value = x.${keyFields[0].formattedName(0)},
-				Text = x.ToString(),
-			}).ToList();
-
-#end ##fin du if
-#end ##fin du foreach
-#end ##fin du else
-#end ##fin du foreach		
-
+#foreach ( $attribute in $linkFields )
+			${attribute.name} = ${entity.name}.${attribute.name};
+#end ##end foreach
 		}
 	}
 }

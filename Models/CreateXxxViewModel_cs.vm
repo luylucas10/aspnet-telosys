@@ -14,6 +14,7 @@ $env.setLanguage('C#')
 #set( $name = ${fn.uncapitalize($entity.name)})
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
+#set( $linkFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.IN_SELECTED_LINKS ) )
 
 namespace ${SOLUTION_NAMESPACE}.ViewModels
 {
@@ -22,6 +23,10 @@ namespace ${SOLUTION_NAMESPACE}.ViewModels
 #foreach( $attribute in $dataFields )
 		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; } 
 #end
+
+#foreach ( $attribute in $linkFields )
+		public $attribute.type ${attribute.name} { get; set; }
+#end ##end foreach
 
 #foreach( $link in $entity.selectedLinks )
 #if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
@@ -43,16 +48,20 @@ namespace ${SOLUTION_NAMESPACE}.ViewModels
 
 		}
 
-		public Create${entity.name}ViewModel(${entity.name} $name)
+		public Create${entity.name}ViewModel(${entity.name} ${entity.name})
 		{
 
 #foreach( $attribute in $dataFields )
-			${attribute.formattedName(0)} = ${name}.${attribute.formattedName(0)};
+			${attribute.formattedName(0)} = ${entity.name}.${attribute.formattedName(0)};
 #end
+
+#foreach ( $attribute in $linkFields )
+			${attribute.name} = ${entity.name}.${attribute.name};
+#end ##end foreach
 
 #foreach( $link in $entity.selectedLinks )
 #if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
-			${link.formattedFieldType(0)} = ${name}.${link.formattedFieldName(0)}.Select(x => new SelectListItem()
+			${link.formattedFieldType(0)} = ${entity.name}.${link.formattedFieldName(0)}.Select(x => new SelectListItem()
 			{
 				Value = x.${keyFields[0].formattedType(0)},
 				Text = x.ToString(),

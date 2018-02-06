@@ -18,7 +18,7 @@ $env.setLanguage('C#')
 ##--------------------------------------------------------------------------------------------------------
 ## Link fields = fields not in Primary Key and used as FK in selected Links    
 #set( $linkFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.IN_SELECTED_LINKS ) )
-
+#set( $string = "string")
 
 namespace ${SOLUTION_NAMESPACE}.Models
 {
@@ -26,34 +26,53 @@ namespace ${SOLUTION_NAMESPACE}.Models
 	{
 		//--- KEY ATTRIBUTE 
 #foreach( $attribute in $entity.keyAttributes )
+
 		[Key]
+#if( $entity.keyAttributesCount > 1 )
+		[Column(Order = $foreach.count)]
+		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; }
+#else
+#if( ${fn.uncapitalize($attribute.formattedType(0))} == $string)
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; } // Id or Primary Key
-#end
+#else
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+#end ## end if
+		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; }
+#end ## end if
+#end ## end foreach
 
 		//--- DATA (NOT KEY and NOT LINK) ATTRIBUTES 
-## #foreach( $attribute in $entity.nonKeyAttributes )
+
 #foreach( $attribute in $dataFields )
 		public ${attribute.formattedType(0)} ${attribute.formattedName(0)} { get; set; } 
 #end
 
-
 		//--- LINKS ATTRIBUTES 
-#foreach( $link in $entity.selectedLinks )
+#foreach ( $attribute in $linkFields )
 
-#if( ${link.formattedFieldType(0)} == ${link.formattedFieldName(0)})
-		[ForeignKey("${link.formattedFieldType(0)}")]
-		public string ${link.formattedFieldName(0)}Id { get; set; }
-		public virtual ${link.formattedFieldType(0)} ${link.formattedFieldName(0)} { get; set; }
+		[ForeignKey("${attribute.referencedEntityName}")]
+		public $attribute.type ${attribute.name} { get; set; }
+		public ${attribute.referencedEntityName} ${attribute.referencedEntityName} { get; set; }
+#end ##end foreach
+#foreach( $link in $entity.selectedLinks )
+#if( $link.hasAttributeInPrimaryKey())
+#else
+#if( ${link.formattedFieldType(0)} == ${link.formattedFieldType(0)})
+#if ( $link.fieldType.matches("List.+") )
+
+		public ICollection<${link.targetEntitySimpleType}> ${link.targetEntitySimpleType}s { get; set; }
+#end
+##
 #else
 #set($test = "${link.formattedFieldType(0)}s")
 #foreach( $attribute in $entity.nonKeyAttributes)
 #if( ${attribute.formattedName(0)} ==  $test)
-		public virtual ${test}Collection ${attribute.formattedName(0)} { get; set; }
-#end ##fin du if
-#end ##fin du foreach
-#end ##fin du else
-#end ##fin du foreach
+		public ${test}Collection ${attribute.formattedName(0)} { get; set; }
+#end ##end if
+#end ##end foreach
+#end ##end else
+#end ##end if
+#end ##end foreach
 		
 		public ${entity.name}()
 		{
@@ -62,13 +81,11 @@ namespace ${SOLUTION_NAMESPACE}.Models
 
 		public override string ToString()
 		{
-			return string.Empty + #foreach( $attribute in $dataFields ) #if(${dataFields.size()} == $foreach.count)${attribute.formattedName(0)} #else ${attribute.formattedName(0)} + " " + #end#end;		
-		
+			return string.Empty #if(${dataFields.size()} == 0) #else + #end #foreach( $attribute in $dataFields ) #if(${dataFields.size()} == $foreach.count) ${attribute.formattedName(0)} #else ${attribute.formattedName(0)} + " " + #end#end;	
 		}
 	}
 
-
-##Méthode d'extensions dans le cas où l'entité possède une propriété de type collection
+##If the entity has a collection type property
 #foreach( $link in $entity.selectedLinks )
 #if( ${link.formattedFieldType(0)} != ${link.formattedFieldName(0)})
 #set($test = "${link.formattedFieldType(0)}s")
@@ -81,9 +98,9 @@ namespace ${SOLUTION_NAMESPACE}.Models
 			return this.Aggregate(string.Empty, (current, ${fn.uncapitalize($link.formattedFieldType(0))}) => current + ${fn.uncapitalize($link.formattedFieldType(0))}.ToString() + "; "); 
 		}
 	}
-#end ##fin du if
-#end ##fin du foreach
-#end ##fin du if
-#end ##fin du foreach
+#end ##end if
+#end ##end foreach
+#end ##end if
+#end ##end foreach
 
 }

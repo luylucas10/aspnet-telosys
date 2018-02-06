@@ -2,18 +2,15 @@
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
-
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
-
 $env.setLanguage('C#')
-
 <div class="container">
     <div class="container">
-        <div id="authorPanel" class="panel-group">
+        <div id="${entity.name}Panel" class="panel-group">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3>
-                        <span class="glyphicon glyphicon-leaf"></span> Author List
+                        <span class="glyphicon glyphicon-leaf"></span> ${entity.name} List
                         <a href="@Url.Action("Create", "${entity.name}s")">
                             <button type="button" class="btn btn-success pull-right">
                                 <span class="glyphicon glyphicon-plus"></span> Create
@@ -35,9 +32,9 @@ $env.setLanguage('C#')
 			{
                 <tr>
 #foreach($attribute in $entity.nonKeyAttributes)
-					<td><a href="@Url.Action("Update", "$entity.name", new { id = @${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)} })">@${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)}</a></td>					
+					<td><a href="@Url.Action("Update", "${entity.name}s", new { id = @${fn.uncapitalize($entity.name)}.${keyFields[0].formattedName(0)} })">@${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)}</a></td>					
 #end
-					<td><a data-target="#@${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)}" data-toggle="modal" href="@Url.Action("Delete", "${entity.name}s", new { id = ${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)} })"><span class="glyphicon glyphicon-trash"></span></a></td>
+					<td><a data-target="#@${fn.uncapitalize($entity.name)}.${keyFields[0].formattedName(0)}" data-toggle="modal" href="@Url.Action("Delete", "${entity.name}s", new { id = @${fn.uncapitalize($entity.name)}.${keyFields[0].formattedName(0)} })"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         }      
                         </tbody>
@@ -50,12 +47,12 @@ $env.setLanguage('C#')
 
 @foreach(var ${fn.uncapitalize($entity.name)} in Model)
 {
-<div id="@${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-mask">
-        <div class="modal-wrapper">
-            <div class="container modal-container">
-                <div class="panel-group">
-                    <div class="panel panel-info">
+<div id="@${fn.uncapitalize($entity.name)}.${keyFields[0].formattedName(0)}" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+          <div class="modal-wrapper">
+                <div style="background: #fff">
+                    <div class="panel-group">
+                      <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3>Warning</h3>
                         </div>
@@ -69,7 +66,7 @@ $env.setLanguage('C#')
                         @using (Html.BeginForm(actionName: "Delete", controllerName: "${entity.name}s", method: FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
-							<input type="hidden" name="${attribute.formattedName(0)}" value="@${fn.uncapitalize($entity.name)}.${attribute.formattedName(0)}"/>
+							<input type="hidden" name="${keyFields[0].formattedName(0)}" value="@${fn.uncapitalize($entity.name)}.${keyFields[0].formattedName(0)}"/>
                             <button type="submit" name="" class="btn btn-success">
                                 <span class="glyphicon glyphicon-trash"></span>
                                 Yes
