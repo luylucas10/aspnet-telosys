@@ -1,8 +1,8 @@
+$env.setLanguage('C#')
 @model ${SOLUTION_NAMESPACE}.ViewModels.Create${entity.name}ViewModel
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
-$env.setLanguage('C#')
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 <div class="container">
     <div class="container">

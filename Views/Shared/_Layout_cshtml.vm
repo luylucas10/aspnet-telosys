@@ -1,3 +1,4 @@
+$env.setLanguage('C#')
 <!DOCTYPE html>
 <html>
 <head>

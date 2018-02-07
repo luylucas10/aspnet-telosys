@@ -1,9 +1,9 @@
+$env.setLanguage('C#')
 @model ICollection<${SOLUTION_NAMESPACE}.Models.${entity.name}>
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
-$env.setLanguage('C#')
 <div class="container">
     <div class="container">
         <div id="${entity.name}Panel" class="panel-group">

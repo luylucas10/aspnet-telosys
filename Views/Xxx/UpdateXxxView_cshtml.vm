@@ -1,8 +1,8 @@
+$env.setLanguage('C#')
 @model ${SOLUTION_NAMESPACE}.ViewModels.Update${entity.name}ViewModel
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
-$env.setLanguage('C#')
 <div class="container">
     <div class="container">
         @using (Html.BeginForm(actionName: "Update", controllerName: "${entity.name}s", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
