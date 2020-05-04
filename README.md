@@ -1,8 +1,8 @@
 # Telosys templates for C# web MVC application
 
-This is Telosys bundle of templates designed to generate a C# MVC application.  
+This bundle of templates is designed to generate a C# web MVC application with Telosys.
 
-This bundle provide templates to generate Controllers, Models and Views.
+This bundle provides a set of templates to generate Controllers, Models and Views.
 
 ## Requirements
 
