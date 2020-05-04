@@ -9,7 +9,7 @@ This bundle provides a set of templates to generate Controllers, Models and View
 - Microsoft SQL Server.
 - A Web Application MVC Visual Studio project with EntityFramework installed (via nuget).
 
-## Installation
+## Usage
 
 1. Define all your domain entities in a model
 
