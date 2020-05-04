@@ -1,4 +1,4 @@
-# Telosys 3 MVC C# Template
+# Telosys templates for C# web MVC application
 
 This is Telosys bundle of templates designed to generate a C# MVC application.  
 
