@@ -15,8 +15,8 @@ This bundle provides a set of templates to generate Controllers, Models and View
 
 2. Use Telosys to download and install this bundle of templates
 
-3. Define the `SOLUTION_NAMESPACE` project variable 
-In `telosys-tools.cfg` file : set `ProjectVariable.SOLUTION_NAMESPACE` 
+3. Define the `SOLUTION_NAMESPACE` project variable  
+In `telosys-tools.cfg` file : set `ProjectVariable.SOLUTION_NAMESPACE`  
 Example :`ProjectVariable.SOLUTION_NAMESPACE=project`
 
 4. Generate the code with Telosys.  
