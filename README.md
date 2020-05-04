@@ -1,9 +1,8 @@
 # Telosys 3 MVC C# Template
 
-This is a C# MVC application Telosys Template.  
-Template purpose : generate the MVC C# files based on your database/dsl model.
+This is Telosys bundle of templates designed to generate a C# MVC application.  
 
-The generated files provide the Controllers, Models and Views. You can use them easily with your Visual Studio project.
+This bundle provide templates to generate Controllers, Models and Views.
 
 ## Requirements
 
@@ -12,19 +11,17 @@ The generated files provide the Controllers, Models and Views. You can use them 
 
 ## Installation
 
-1. Download the template.
-2. Provide your DSL/Database model.
-3. Configure the `ProjectVariable.SOLUTION_NAMESPACE` variable in the `telosys-tools.cfg` file of your Telosys project.  
+1. Define all your domain entities in a model
+2. Use Telosys to download and install this bundle of templates
+3. Define the `SOLUTION_NAMESPACE` project variable
+In `telosys-tools.cfg` file : set `ProjectVariable.SOLUTION_NAMESPACE` 
 Example :`ProjectVariable.SOLUTION_NAMESPACE=project`
 4. Generate the code with Telosys.  
 
-## Getting started
-
-- Import the generated files in your project and run it.
 
 ## Credits
 
-- Made by [Romuald Tuffreau](https://github.com/romwaldtff).
+- Bundle initially created by [Romuald Tuffreau] (https://github.com/romwaldtff).
 
 ## Thanks
 
@@ -32,4 +29,6 @@ Example :`ProjectVariable.SOLUTION_NAMESPACE=project`
 
 ## License
 
-This project uses the [LGPL v3 License](https://www.gnu.org/licenses/lgpl-3.0.en.html) (See the LICENSE file in this repository).
+This bundle is free and Open Source
+[LGPL v3 License](https://www.gnu.org/licenses/lgpl-3.0.en.html) (See the LICENSE file in this repository).
+
