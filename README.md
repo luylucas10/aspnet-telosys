@@ -2,7 +2,7 @@
 
 This bundle of templates is designed to generate a C# web MVC application with Telosys.
 
-This bundle provides a set of templates to generate Controllers, Models and Views.
+It provides a set of templates to generate Controllers, Models and Views.
 
 ## Requirements
 
@@ -15,11 +15,15 @@ This bundle provides a set of templates to generate Controllers, Models and View
 
 2. Use Telosys to download and install this bundle of templates
 
-3. Define the `SOLUTION_NAMESPACE` project variable  
-In `telosys-tools.cfg` file : set `ProjectVariable.SOLUTION_NAMESPACE`  
-Example :`ProjectVariable.SOLUTION_NAMESPACE=project`
+3. Define the `NAMESPACE` project variable  
+In `telosys-tools.cfg` file : set `ProjectVariable.NAMESPACE`  
+Example :`ProjectVariable.NAMESPACE=project`  
+( if the project variable is not defined a default name will be used )
 
-4. Generate the code with Telosys.  
+4. Define the source folder (where to generate the source code)  
+In `telosys-tools.cfg` file : set `SRC`  
+
+5. Generate the code with Telosys.  
 
 
 ## Credits
@@ -28,7 +32,7 @@ Example :`ProjectVariable.SOLUTION_NAMESPACE=project`
 
 ## Thanks
 
-- [Laurent Guerin](https://github.com/l-gu), creator of [Telosys Tools](http://www.telosys.org/).
+- [Laurent Guerin](https://github.com/l-gu), creator of [Telosys code generator](http://www.telosys.org/).
 
 ## License
 

@@ -1,3 +1,4 @@
+#parse("include/init_var.vm")
 //
 // C# class for entity "${entity.name}" 
 // Created on $today.date ( Date ISO $today.date("yyyy-MM-dd") - Time $today.time )
@@ -19,7 +20,7 @@ using System.Web;
 #set( $string = "string")
 ##--------------------------------------------------------------------------------------------------------
 
-namespace ${SOLUTION_NAMESPACE}.Models
+namespace ${NAMESPACE}.Models
 {
 	public class ${entity.name}
 	{

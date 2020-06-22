@@ -1,3 +1,4 @@
+#parse("include/init_var.vm")
 //
 // C# class for entity "${entity.name}" 
 // Created on $today.date ( Date ISO $today.date("yyyy-MM-dd") - Time $today.time )
@@ -10,8 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using ${SOLUTION_NAMESPACE}.Models;
-using ${SOLUTION_NAMESPACE}.ViewModels;
+using ${NAMESPACE}.Models;
+using ${NAMESPACE}.ViewModels;
 ##--------------------------------------------------------------------------------------------------------
 ## Key fields = fields in Primary Key    
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
@@ -26,7 +27,7 @@ using ${SOLUTION_NAMESPACE}.ViewModels;
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
 ##--------------------------------------------------------------------------------------------------------
 
-namespace ${SOLUTION_NAMESPACE}.Controllers
+namespace ${NAMESPACE}.Controllers
 {
 	public class ${entity.name}sController : Controller
 	{

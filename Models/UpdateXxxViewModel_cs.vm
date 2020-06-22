@@ -1,3 +1,4 @@
+#parse("include/init_var.vm")
 //
 // C# class for entity "${entity.name}" 
 // Created on $today.date ( Date ISO $today.date("yyyy-MM-dd") - Time $today.time )
@@ -9,13 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ${SOLUTION_NAMESPACE}.Models;
+using ${NAMESPACE}.Models;
 #set( $name = ${fn.uncapitalize($entity.name)})
 #set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 #set( $keyFields = $entity.getAttributesByCriteria( $const.KEY ) )
 #set( $linkFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.IN_SELECTED_LINKS ) )
 
-namespace ${SOLUTION_NAMESPACE}.ViewModels
+namespace ${NAMESPACE}.ViewModels
 {
 	public class Update${entity.name}ViewModel
 	{

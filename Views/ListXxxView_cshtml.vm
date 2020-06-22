@@ -1,5 +1,6 @@
+#parse("include/init_var.vm")
 $env.setLanguage('C#')
-@model ICollection<${SOLUTION_NAMESPACE}.Models.${entity.name}>
+@model ICollection<${NAMESPACE}.Models.${entity.name}>
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }

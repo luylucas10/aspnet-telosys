@@ -1,5 +1,6 @@
+#parse("include/init_var.vm")
 $env.setLanguage('C#')
-@model ${SOLUTION_NAMESPACE}.ViewModels.Update${entity.name}ViewModel
+@model ${NAMESPACE}.ViewModels.Update${entity.name}ViewModel
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";	
 }
