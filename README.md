@@ -30,9 +30,6 @@ In `telosys-tools.cfg` file : set `SRC`
 
 - Bundle initially created by [Romuald Tuffreau] (https://github.com/romwaldtff).
 
-## Thanks
-
-- [Laurent Guerin](https://github.com/l-gu), creator of [Telosys code generator](https://www.telosys.org/).
 
 ## License
 
