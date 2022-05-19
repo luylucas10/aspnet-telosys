@@ -32,7 +32,7 @@ In `telosys-tools.cfg` file : set `SRC`
 
 ## Thanks
 
-- [Laurent Guerin](https://github.com/l-gu), creator of [Telosys code generator](http://www.telosys.org/).
+- [Laurent Guerin](https://github.com/l-gu), creator of [Telosys code generator](https://www.telosys.org/).
 
 ## License
 
