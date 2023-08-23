@@ -1,3 +1,4 @@
+#checkId($entity)
 #parse("include/init_var.vm")
 $env.setLanguage('C#')
 @model ${NAMESPACE}.ViewModels.Create${entity.name}ViewModel
