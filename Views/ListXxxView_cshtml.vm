@@ -1,3 +1,4 @@
+#checkId($entity)
 #parse("include/init_var.vm")
 $env.setLanguage('C#')
 @model ICollection<${NAMESPACE}.Models.${entity.name}>
