@@ -1,3 +1,4 @@
+#checkId($entity)
 #parse("include/init_var.vm")
 //
 // C# class for entity "${entity.name}" 
